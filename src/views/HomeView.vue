@@ -1,27 +1,11 @@
 <template>
   <div class="home">
-    <h1>Smart Truck App</h1>
-    <p>Welcome to your smart truck management application</p>
+    <h1 class="text-3xl font-bold underline mb-2">Hello world!</h1>
+
+    <Button label="Submit" />
   </div>
 </template>
 
 <script setup lang="ts">
-// Home view component
+import Button from 'primevue/button'
 </script>
-
-<style scoped>
-.home {
-  text-align: center;
-  padding: 2rem;
-}
-
-h1 {
-  color: #2c3e50;
-  margin-bottom: 1rem;
-}
-
-p {
-  color: #7f8c8d;
-  font-size: 1.1rem;
-}
-</style>

@@ -1,61 +1,78 @@
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
 import * as parserVue from 'vue-eslint-parser'
-import configPrettier from 'eslint-config-prettier'
-import pluginPrettier from 'eslint-plugin-prettier'
-import { defineFlatConfig } from 'eslint-define-config'
-import * as parserTypeScript from '@typescript-eslint/parser'
-import pluginTypeScript from '@typescript-eslint/eslint-plugin'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import parserTypescript from '@typescript-eslint/parser'
+import prettierConfig from 'eslint-config-prettier'
+import prettierPlugin from 'eslint-plugin-prettier'
 
-export default defineFlatConfig([
+export default [
   {
-    ...js.configs.recommended,
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/build/**',
-      '**/.nuxt/**',
-      '**/.output/**',
-      '**/.vite/**'
-    ]
+    name: 'app/files-to-lint',
+    files: ['**/*.{js,mjs,cjs,ts,mts,tsx,vue}'],
   },
-  ...pluginVue.configs['flat/strongly-recommended'],
+
   {
-    files: ['**/*.vue', '**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-    plugins: {
-      prettier: pluginPrettier
+    name: 'app/files-to-ignore',
+    ignores: ['**/dist/**', '**/coverage/**'],
+  },
+
+  js.configs.recommended,
+
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: parserTypescript,
+      parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 'latest',
+      },
+      globals: {
+        console: 'readonly',
+        __dirname: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+      },
     },
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'no-undef': 'error',
+    },
+  },
+
+  ...pluginVue.configs['flat/essential'],
+
+  {
+    files: ['**/*.vue'],
     languageOptions: {
       parser: parserVue,
       parserOptions: {
-        parser: parserTypeScript,
+        parser: parserTypescript,
+        sourceType: 'module',
         ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
+      },
     },
     rules: {
-      ...configPrettier.rules,
-      'prettier/prettier': 'error',
-      'vue/html-self-closing': 'off',
-      'vue/max-attributes-per-line': 'off'
-    }
+      'vue/multi-word-component-names': 'off',
+    },
   },
+
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    name: 'app/custom-rules',
     plugins: {
-      '@typescript-eslint': pluginTypeScript
-    },
-    languageOptions: {
-      parser: parserTypeScript,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
+      prettier: prettierPlugin,
     },
     rules: {
-      ...pluginTypeScript.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/no-explicit-any': 'warn'
-    }
-  }
-])
+      semi: 'error',
+      'prefer-const': 'error',
+      'no-unused-vars': 'error',
+      'prettier/prettier': 'error',
+    },
+  },
+
+  prettierConfig,
+]
