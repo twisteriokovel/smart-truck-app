@@ -32,6 +32,10 @@ export default [
         __dirname: 'readonly',
         process: 'readonly',
         Buffer: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
       },
     },
     plugins: {
@@ -55,6 +59,17 @@ export default [
         sourceType: 'module',
         ecmaVersion: 'latest',
       },
+      globals: {
+        console: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        Event: 'readonly',
+        MouseEvent: 'readonly',
+        KeyboardEvent: 'readonly',
+        HTMLElement: 'readonly',
+      },
     },
     rules: {
       'vue/multi-word-component-names': 'off',
@@ -68,8 +83,8 @@ export default [
     },
     rules: {
       semi: 'error',
-      'prefer-const': 'error',
       'no-unused-vars': 'error',
+      'prefer-const': 'error',
       'prettier/prettier': 'error',
     },
   },

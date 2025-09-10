@@ -24,18 +24,40 @@ class ApiClient {
     this.client.interceptors.request.use(
       (config) => {
         config.baseURL = API_CONFIG.baseURL
+
+        const token = localStorage.getItem('auth_token')
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`
+        }
+
         return config
       },
       (error) => Promise.reject(error),
     )
 
-    this.client.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        console.error('API Error:', error.response?.data || error.message)
-        return Promise.reject(error)
-      },
-    )
+    // this.client.interceptors.response.use(
+    //   (response) => response,
+    //   async (error) => {
+    //     console.error('API Error:', error.response?.data || error.message)
+
+    //     if (error.response?.status === 401) {
+    //       localStorage.removeItem('auth_token')
+    //       localStorage.removeItem('auth_user')
+    //       if (typeof window !== 'undefined' && (window as any).__PINIA__) {
+    //         try {
+    //           const { useAuthStore } = await import('@/stores/auth')
+    //           const authStore = useAuthStore()
+    //           authStore.clearAuth()
+    //         } catch (e) {
+    //           console.error(e)
+    //         }
+    //       }
+    //       window.location.href = '/login'
+    //     }
+
+    //     return Promise.reject(error)
+    //   },
+    // )
   }
 
   async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
