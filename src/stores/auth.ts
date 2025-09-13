@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { apiClient } from '@/api'
+import { login as apiLogin, getProfile } from '@/api'
 import type { ILoginCredentials, ILoginResponse, IUser } from '@/types/auth'
 import { getToken, setToken, removeToken } from '@/utils/token'
 
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function fetchProfile(): Promise<IUser | null> {
     try {
-      const response = await apiClient.get<IUser>('/auth/profile')
+      const response = await getProfile()
       return response
     } catch (error) {
       console.error('Failed to fetch profile:', error)
@@ -46,12 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading.value = true
 
     try {
-      const response = await apiClient.post<ILoginResponse>(
-        '/auth/login',
-        credentials,
-      )
-
-      console.log(response)
+      const response = await apiLogin(credentials)
 
       if (response.access_token) {
         token.value = response.access_token

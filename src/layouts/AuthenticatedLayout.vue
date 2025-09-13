@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 flex flex-col">
     <TheHeader />
 
-    <div class="flex">
+    <div class="flex flex-grow-1">
       <TheSidebar />
 
       <main class="flex-1 py-6 px-8">

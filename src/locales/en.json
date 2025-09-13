@@ -9,9 +9,13 @@
     "error": "Error",
     "success": "Success",
     "confirm": "Confirm",
+    "confirmation": "Confirmation",
     "yes": "Yes",
     "no": "No",
-    "settings": "Settings"
+    "settings": "Settings",
+    "actions": "Actions",
+    "create": "Create",
+    "update": "Update"
   },
   "auth": {
     "login": "Sign In",
@@ -36,5 +40,32 @@
   "languages": {
     "en": "English",
     "ua": "Українська"
+  },
+  "addresses": {
+    "title": "Addresses",
+    "addAddress": "Add address",
+    "noAddressesFound": "No addresses found.",
+    "city": "City",
+    "state": "State",
+    "address": "Address",
+    "postcode": "Postcode",
+    "country": "Country",
+    "createAddress": "Create address",
+    "editAddress": "Edit address",
+    "addressLine1": "Address",
+    "enterAddressLine1": "Enter address",
+    "enterCity": "Enter city",
+    "enterState": "Enter state",
+    "enterPostcode": "Enter postcode",
+    "enterCountry": "Enter country",
+    "confirmDeleteMessage": "Are you sure you want to delete this address?",
+    "addressDeletedSuccessfully": "Address deleted successfully",
+    "failedToDeleteAddress": "Failed to delete address",
+    "addressUpdatedSuccessfully": "Address updated successfully",
+    "addressCreatedSuccessfully": "Address created successfully",
+    "failedToSaveAddress": "Failed to save address"
+  },
+  "validation": {
+    "required": "{field} is required"
   }
 }

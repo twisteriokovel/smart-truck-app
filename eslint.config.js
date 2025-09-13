@@ -1,81 +1,32 @@
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
-import * as parserVue from 'vue-eslint-parser'
-import tsPlugin from '@typescript-eslint/eslint-plugin'
-import parserTypescript from '@typescript-eslint/parser'
+import eslint from '@eslint/js'
+import eslintPluginVue from 'eslint-plugin-vue'
+import globals from 'globals'
+import typescriptEslint from 'typescript-eslint'
+
 import prettierConfig from 'eslint-config-prettier'
 import prettierPlugin from 'eslint-plugin-prettier'
 
-export default [
+export default typescriptEslint.config(
+  { ignores: ['*.d.ts', '**/coverage', '**/dist'] },
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,cjs,ts,mts,tsx,vue}'],
-  },
-
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/coverage/**'],
-  },
-
-  js.configs.recommended,
-
-  {
-    files: ['**/*.{ts,tsx}'],
+    extends: [
+      eslint.configs.recommended,
+      ...typescriptEslint.configs.recommended,
+      ...eslintPluginVue.configs['flat/recommended'],
+    ],
+    files: ['**/*.{ts,vue}'],
     languageOptions: {
-      parser: parserTypescript,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: globals.browser,
       parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 'latest',
+        parser: typescriptEslint.parser,
       },
-      globals: {
-        console: 'readonly',
-        __dirname: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly',
-        localStorage: 'readonly',
-        sessionStorage: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
-      'no-undef': 'error',
     },
   },
-
-  ...pluginVue.configs['flat/essential'],
-
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: parserVue,
-      parserOptions: {
-        parser: parserTypescript,
-        sourceType: 'module',
-        ecmaVersion: 'latest',
-      },
-      globals: {
-        console: 'readonly',
-        localStorage: 'readonly',
-        sessionStorage: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
-        Event: 'readonly',
-        MouseEvent: 'readonly',
-        KeyboardEvent: 'readonly',
-        HTMLElement: 'readonly',
-      },
-    },
-    rules: {
-      'vue/multi-word-component-names': 'off',
-    },
-  },
-
   {
     name: 'app/custom-rules',
     plugins: {
@@ -83,11 +34,10 @@ export default [
     },
     rules: {
       semi: 'error',
-      'no-unused-vars': 'error',
       'prefer-const': 'error',
       'prettier/prettier': 'error',
     },
   },
 
   prettierConfig,
-]
+)

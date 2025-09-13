@@ -1,6 +1,6 @@
 <template>
-  <header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <header class="bg-white shadow relative z-1">
+    <div class="px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-6">
         <div class="flex items-center">
           <h1 class="text-xl font-bold text-gray-900">
@@ -45,7 +45,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
 
-interface IMenuItem {
+interface IUserMenuItem {
   label: string
   icon: string
   command: () => void
@@ -59,7 +59,7 @@ const { logout } = authStore
 
 const isShownUserMenu = ref()
 
-const menuItems: IMenuItem[] = [
+const menuItems: IUserMenuItem[] = [
   {
     label: t('common.settings'),
     icon: 'pi pi-cog',
@@ -73,9 +73,8 @@ const menuItems: IMenuItem[] = [
 ]
 
 const getUserInitials = computed(() => {
-  if (user.value?.email) {
-    const email = user.value.email
-    return email.charAt(0).toUpperCase()
+  if (user.value?.firstName && user.value?.lastName) {
+    return `${user.value.firstName.charAt(0)}${user.value.lastName.charAt(0)}`.toUpperCase()
   }
   return 'U'
 })

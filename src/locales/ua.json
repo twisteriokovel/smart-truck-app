@@ -11,7 +11,11 @@
     "confirm": "Підтвердити",
     "yes": "Так",
     "no": "Ні",
-    "settings": "Налаштування"
+    "settings": "Налаштування",
+    "actions": "Дії",
+    "create": "Створити",
+    "update": "Оновити",
+    "confirmDelete": "Підтвердити видалення"
   },
   "auth": {
     "login": "Увійти",
@@ -36,5 +40,34 @@
   "languages": {
     "en": "English",
     "ua": "Українська"
+  },
+  "addresses": {
+    "title": "Адреси",
+    "addAddress": "Додати адресу",
+    "noAddressesFound": "Адреси не знайдено.",
+    "city": "Місто",
+    "state": "Область",
+    "address": "Адреса",
+    "postcode": "Поштовий індекс",
+    "country": "Країна",
+    "createAddress": "Створити адресу",
+    "editAddress": "Редагувати адресу",
+    "addressLine1": "Адреса рядок 1",
+    "addressLine2": "Адреса рядок 2 (необов'язково)",
+    "enterAddressLine1": "Введіть адресу рядок 1",
+    "enterAddressLine2": "Введіть адресу рядок 2 (необов'язково)",
+    "enterCity": "Введіть місто",
+    "enterState": "Введіть область",
+    "enterPostcode": "Введіть поштовий індекс",
+    "enterCountry": "Введіть країну",
+    "confirmDeleteMessage": "Ви впевнені, що хочете видалити цю адресу?",
+    "addressDeletedSuccessfully": "Адресу успішно видалено",
+    "failedToDeleteAddress": "Не вдалося видалити адресу",
+    "addressUpdatedSuccessfully": "Адресу успішно оновлено",
+    "addressCreatedSuccessfully": "Адресу успішно створено",
+    "failedToSaveAddress": "Не вдалося зберегти адресу"
+  },
+  "validation": {
+    "required": "{field} обов'язкове поле"
   }
 }

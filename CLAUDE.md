@@ -19,3 +19,5 @@ function methodName(params: ITypeExample) {}
 
 3. Each type or interface should start with `I`. Example `ITruckData`
 4. You don't need to Type every function. If it has default and obvious typing like string or boolean or void, please ignore that
+5. Use translation for each texts
+6. When you work with PrimeVue components, you should import them
