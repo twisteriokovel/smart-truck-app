@@ -64,8 +64,24 @@ export async function deleteAddress(id: string): Promise<void> {
   return apiClient.delete<void>(`/addresses/${id}`)
 }
 
-export async function getAllTrucks(): Promise<ITruck[]> {
-  return apiClient.get<ITruck[]>('/trucks')
+export async function getAllTrucks(params?: {
+  page?: number
+  pageSize?: number
+}): Promise<{
+  trucks: ITruck[]
+  total: number
+  page: number
+  pageSize: number
+}> {
+  const queryParams = new URLSearchParams()
+  if (params?.page) queryParams.append('page', params.page.toString())
+  if (params?.pageSize)
+    queryParams.append('pageSize', params.pageSize.toString())
+
+  const query = queryParams.toString()
+  const url = query ? `/trucks?${query}` : '/trucks'
+
+  return apiClient.get(url)
 }
 
 export async function getTruckById(id: string): Promise<ITruck> {
