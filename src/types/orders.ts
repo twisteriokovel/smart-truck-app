@@ -1,30 +1,35 @@
-export interface IOrder {
-  id: string
-  customerName: string
-  customerEmail: string
-  pickupAddress: string
-  deliveryAddress: string
-  items: IOrderItem[]
-  totalWeight: number
-  status: 'pending' | 'assigned' | 'in_transit' | 'delivered' | 'cancelled'
-  createdAt: string
-  scheduledAt?: string
-  truckId?: string
+import type { IAddress } from '@/types/addresses'
+
+export enum OrderStatus {
+  DRAFT = 'draft',
+  NEW = 'new',
+  IN_PROGRESS = 'in_progress',
+  DONE = 'done',
+  CANCELLED = 'cancelled',
 }
 
-export interface IOrderItem {
+export interface IPallet {
   id: string
-  name: string
-  quantity: number
   weight: number
-  description?: string
+  height: number
 }
 
-export interface ICreateOrderData {
-  customerName: string
-  customerEmail: string
-  pickupAddress: string
-  deliveryAddress: string
-  items: Omit<IOrderItem, 'id'>[]
-  scheduledAt?: string
+export interface IOrderFormData {
+  pallets: IPallet[]
+  destinationAddressId: string
+  notes?: string
+}
+
+export interface IOrderResponse {
+  _id: string
+  cargoWeight: number
+  remainingCargo: number
+  status: OrderStatus
+  destinationAddressId: string
+  destinationAddress?: IAddress
+  pallets?: IPallet[]
+  notes?: string
+  trips: string[]
+  createdAt: Date
+  updatedAt: Date
 }

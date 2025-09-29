@@ -1,9 +1,6 @@
 <template>
   <div class="relative">
-    <small v-if="$slots.info" class="block my-1">
-      <slot name="info"></slot>
-    </small>
-    <UiLabel v-if="label">
+    <UiLabel v-if="label" :label="label" :horizontal="horizontal">
       <slot></slot>
     </UiLabel>
     <slot v-else />
@@ -32,6 +29,10 @@ defineProps({
   errorMessages: {
     type: Array,
     default: () => [],
+  },
+  horizontal: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>

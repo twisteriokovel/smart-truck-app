@@ -1,8 +1,10 @@
 <template>
-  <UiFormField :id="uniqId" :label="label" :error-messages="errorMessages">
-    <template v-if="$slots.info" #info>
-      <slot name="info"></slot>
-    </template>
+  <UiFormField
+    :id="uniqId"
+    :label="label"
+    :error-messages="errorMessages"
+    :horizontal="horizontal"
+  >
     <component
       v-bind="componentAttrs"
       :is="component"
@@ -45,6 +47,10 @@ const props = defineProps({
   errorMessages: {
     type: Array,
     default: () => [],
+  },
+  horizontal: {
+    type: Boolean,
+    default: false,
   },
 })
 

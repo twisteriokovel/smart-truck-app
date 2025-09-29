@@ -3,6 +3,9 @@ import DashboardView from '@/views/DashboardView.vue'
 import AddressesView from '@/views/AddressesView.vue'
 import TrucksView from '@/views/TrucksView.vue'
 import OrdersView from '@/views/OrdersView.vue'
+import OrderDetailsView from '@/views/OrderDetailsView.vue'
+import CreateOrderView from '@/views/CreateOrderView.vue'
+import EditOrderView from '@/views/EditOrderView.vue'
 import TripsView from '@/views/TripsView.vue'
 import LoginView from '@/views/LoginView.vue'
 import { useAuthStore } from '@/stores/auth'
@@ -38,6 +41,24 @@ const router = createRouter({
       path: '/orders',
       name: 'orders',
       component: OrdersView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/orders/create',
+      name: 'create-order',
+      component: CreateOrderView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/orders/edit/:id',
+      name: 'edit-order',
+      component: EditOrderView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/orders/:id',
+      name: 'order-details',
+      component: OrderDetailsView,
       meta: { requiresAuth: true },
     },
     {

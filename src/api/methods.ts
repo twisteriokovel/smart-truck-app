@@ -2,7 +2,7 @@ import { apiClient } from './client'
 import type { ILoginCredentials, ILoginResponse, IUser } from '@/types/auth'
 import type { IAddress, ICreateAddressData } from '@/types/addresses'
 import type { ITruck, ICreateTruckData } from '@/types/trucks'
-import type { IOrder, ICreateOrderData } from '@/types/orders'
+import type { IOrderResponse as IOrder, IOrderFormData } from '@/types/orders'
 import type { ITrip, ICreateTripData } from '@/types/trips'
 
 export async function login(
@@ -103,21 +103,37 @@ export async function deleteTruck(id: string): Promise<void> {
   return apiClient.delete<void>(`/trucks/${id}`)
 }
 
-export async function getAllOrders(): Promise<IOrder[]> {
-  return apiClient.get<IOrder[]>('/orders')
+export async function getAllOrders(params?: {
+  page?: number
+  pageSize?: number
+}): Promise<{
+  orders: IOrder[]
+  total: number
+  page: number
+  pageSize: number
+}> {
+  const queryParams = new URLSearchParams()
+  if (params?.page) queryParams.append('page', params.page.toString())
+  if (params?.pageSize)
+    queryParams.append('pageSize', params.pageSize.toString())
+
+  const query = queryParams.toString()
+  const url = query ? `/orders?${query}` : '/orders'
+
+  return apiClient.get(url)
 }
 
 export async function getOrderById(id: string): Promise<IOrder> {
   return apiClient.get<IOrder>(`/orders/${id}`)
 }
 
-export async function createOrder(data: ICreateOrderData): Promise<IOrder> {
+export async function createOrder(data: IOrderFormData): Promise<IOrder> {
   return apiClient.post<IOrder>('/orders', data)
 }
 
 export async function updateOrder(
   id: string,
-  data: Partial<ICreateOrderData>,
+  data: Partial<IOrderFormData>,
 ): Promise<IOrder> {
   return apiClient.put<IOrder>(`/orders/${id}`, data)
 }
@@ -134,6 +150,10 @@ export async function assignTruckToOrder(
   truckId: string,
 ): Promise<IOrder> {
   return apiClient.patch<IOrder>(`/orders/${id}/assign-truck`, { truckId })
+}
+
+export async function cancelOrder(id: string): Promise<IOrder> {
+  return apiClient.patch<IOrder>(`/orders/${id}/cancel`)
 }
 
 export async function deleteOrder(id: string): Promise<void> {
