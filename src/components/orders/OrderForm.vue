@@ -48,7 +48,7 @@
           :label="t('orders.destination') + ' *'"
           :error-messages="result.destinationAddressId.$messages"
         >
-          <Dropdown
+          <Select
             v-model="formData.destinationAddressId"
             :options="addresses"
             option-label="displayName"
@@ -98,7 +98,7 @@ import { useI18n } from 'vue-i18n'
 import useValidate from 'vue-tiny-validate'
 import { v4 } from 'uuid'
 import Button from 'primevue/button'
-import Dropdown from 'primevue/dropdown'
+import Select from 'primevue/select'
 import UiTextField from '@/components/ui/UiTextField.vue'
 import UiFormField from '@/components/ui/UiFormField.vue'
 import CargoSummary from './CargoSummary.vue'
@@ -248,8 +248,29 @@ function initializeFormData() {
               height: 100,
             },
           ],
-      destinationAddressId: props.order.destinationAddressId,
+      destinationAddressId: props.order.destinationAddressId || '',
       notes: props.order.notes || '',
+    }
+
+    if (props.order.destinationAddress && addresses.value.length > 0) {
+      const existingAddress = addresses.value.find(
+        (addr) => addr._id === props.order!.destinationAddressId,
+      )
+
+      if (!existingAddress) {
+        const matchingAddress = addresses.value.find(
+          (addr) =>
+            addr.addressLine1 ===
+              props.order!.destinationAddress?.addressLine1 &&
+            addr.city === props.order!.destinationAddress?.city &&
+            addr.state === props.order!.destinationAddress?.state &&
+            addr.postcode === props.order!.destinationAddress?.postcode,
+        )
+
+        if (matchingAddress) {
+          formData.value.destinationAddressId = matchingAddress._id
+        }
+      }
     }
   }
 }

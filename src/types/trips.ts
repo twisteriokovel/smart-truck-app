@@ -1,10 +1,18 @@
+import type { ITruck } from './trucks'
+
+export enum TripStatus {
+  PLANNED = 'planned',
+  IN_PROGRESS = 'in_progress',
+  DONE = 'done',
+  CANCELLED = 'cancelled',
+}
+
 export interface ITrip {
   id: string
   truckId: string
   driverId: string
   orders: string[]
-  route: IRoutePoint[]
-  status: 'planned' | 'in_progress' | 'completed' | 'cancelled'
+  status: 'planned' | 'in_progress' | 'done' | 'cancelled'
   startedAt?: string
   completedAt?: string
   estimatedDistance: number
@@ -13,20 +21,50 @@ export interface ITrip {
   actualDuration?: number
 }
 
-export interface IRoutePoint {
-  id: string
-  address: string
-  latitude: number
-  longitude: number
-  type: 'pickup' | 'delivery'
-  orderId: string
-  estimatedArrival?: string
-  actualArrival?: string
-}
-
 export interface ICreateTripData {
   truckId: string
   driverId: string
   orders: string[]
-  route: Omit<IRoutePoint, 'id'>[]
+}
+
+export interface IOrderTrip {
+  _id: string
+  orderId: string
+  truck: ITruck
+  tripNumber: string
+  startDate: Date
+  status: TripStatus
+  palletIds: string[]
+  estimatedFuel: string
+  estimatedDuration: string
+  actualFuel?: string
+  actualDuration?: string
+  notes?: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ICreateOrderTripData {
+  orderId: string
+  truckId: string
+  startDate: Date
+  palletIds: string[]
+  estimatedFuel: string
+  estimatedDuration: string
+  notes?: string
+}
+
+export interface IUpdateOrderTripData {
+  truckId?: string
+  startDate?: Date
+  palletIds?: string[]
+  estimatedFuel?: string
+  estimatedDuration?: string
+  notes?: string
+}
+
+export interface ICompleteTripData {
+  actualFuel?: string
+  actualDuration?: string
+  note?: string
 }

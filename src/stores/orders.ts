@@ -50,9 +50,9 @@ export const useOrdersStore = defineStore('orders', () => {
   async function createOrder(data: IOrderFormData) {
     isLoadingOrder.value = true
     try {
-      await apiCreateOrder(data)
+      const { _id: id } = await apiCreateOrder(data)
       success(t('orders.orderCreatedSuccessfully'))
-      fetchOrders()
+      return id
     } catch (err) {
       const message =
         (err as AxiosError<{ message: string }>)?.response?.data?.message ||

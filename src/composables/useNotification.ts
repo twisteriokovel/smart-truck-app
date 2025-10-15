@@ -4,7 +4,6 @@ export function useNotification() {
   const toast = useToast()
 
   function success(message: string, detail?: string) {
-    console.log('SUCC?')
     toast.add({
       severity: 'success',
       summary: message,

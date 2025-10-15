@@ -17,11 +17,11 @@ export function useOrderStatus() {
       },
       [OrderStatus.NEW]: {
         value: t('orders.statusNew'),
-        severity: 'info',
+        severity: 'warn',
       },
       [OrderStatus.IN_PROGRESS]: {
         value: t('orders.statusInProgress'),
-        severity: 'warning',
+        severity: 'info',
       },
       [OrderStatus.DONE]: {
         value: t('orders.statusDone'),

@@ -108,7 +108,7 @@
             <p class="mt-1 text-sm text-gray-900">{{ currentTruck.height }}m</p>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-3 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">
               {{ t('trucks.maxWeight') }}

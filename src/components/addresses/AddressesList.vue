@@ -38,11 +38,7 @@
             </span>
           </template>
         </Column>
-        <Column
-          field="postcode"
-          :header="t('addresses.postcode')"
-          sortable
-        ></Column>
+        <Column field="postcode" :header="t('addresses.postcode')" sortable />
         <Column :header="t('common.actions')">
           <template #body="slotProps">
             <div class="flex gap-2">

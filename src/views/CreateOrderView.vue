@@ -51,8 +51,8 @@ async function handleFormSubmit(formData: IOrderFormData) {
   isSaving.value = true
 
   try {
-    await createOrder(formData)
-    router.push('/orders')
+    const orderId = await createOrder(formData)
+    router.push(`/orders/${orderId}`)
   } catch (err) {
     console.error('Failed to create order:', err)
     error(t('orders.failedToSaveOrder'))

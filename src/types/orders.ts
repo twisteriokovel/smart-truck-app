@@ -22,6 +22,7 @@ export interface IOrderFormData {
 
 export interface IOrderResponse {
   _id: string
+  orderNumber: string
   cargoWeight: number
   remainingCargo: number
   status: OrderStatus

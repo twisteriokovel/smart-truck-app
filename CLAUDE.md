@@ -23,3 +23,4 @@ function methodName(params: ITypeExample) {}
 6. When you work with PrimeVue components, you should import them
 7. When you work with async data fetching make sure you call them on `onBeforeMount` hook but on `onMounted` hook
 8. For form fields validation use `vue-tiny-validate` package, example of usage is `LoginForm.vue` component
+9. Don't add comments when you add some logic, I can handle it by myself

@@ -33,6 +33,12 @@
           </div>
         </template>
 
+        <Column field="orderNumber" :header="t('orders.orderNumber')">
+          <template #body="slotProps">
+            {{ slotProps.data.orderNumber }}
+          </template>
+        </Column>
+
         <Column
           field="destinationAddress"
           :header="t('orders.destination')"
@@ -74,22 +80,21 @@
           <template #body="slotProps">
             <div class="flex gap-2">
               <Button
+                v-tooltip.top="t('common.edit')"
                 icon="pi pi-pencil"
                 severity="info"
                 size="small"
                 text
-                :disabled="slotProps.data.status === 'cancelled'"
+                :disabled="isActionButtonDisabled(slotProps.data.status)"
                 @click.stop="goToEditOrder(slotProps.data._id)"
               />
               <Button
+                v-tooltip.top="t('common.cancel')"
                 icon="pi pi-times"
                 severity="danger"
                 size="small"
                 text
-                :disabled="
-                  slotProps.data.status === 'cancelled' ||
-                  slotProps.data.status === 'done'
-                "
+                :disabled="isActionButtonDisabled(slotProps.data.status)"
                 @click.stop="confirmCancelOrder(slotProps.data)"
               />
             </div>
@@ -118,7 +123,7 @@ import Column from 'primevue/column'
 import Tag from 'primevue/tag'
 import CancelOrderDialog from './CancelOrderDialog.vue'
 import { useOrdersStore } from '@/stores/orders'
-import type { IOrderResponse as IOrder } from '@/types/orders'
+import { type IOrderResponse as IOrder, OrderStatus } from '@/types/orders'
 import { useOrderStatus } from '@/composables/useOrderStatus'
 import { useDateFormat } from '@/composables/useDateFormat'
 import { useNotification } from '@/composables/useNotification'
@@ -147,11 +152,15 @@ function onRowSelect(event: { data: IOrder }) {
 }
 
 function goToEditOrder(orderId: string) {
-  router.push(`/orders/${orderId}/edit`)
+  router.push(`/orders/edit/${orderId}`)
 }
 
 function getPalletsCount(order: IOrder): number {
   return order.pallets?.length || 0
+}
+
+function isActionButtonDisabled(status: OrderStatus) {
+  return status === OrderStatus.CANCELLED || status === OrderStatus.DONE
 }
 
 function confirmCancelOrder(order: IOrder) {

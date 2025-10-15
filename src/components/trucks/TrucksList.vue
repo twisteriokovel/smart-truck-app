@@ -18,7 +18,7 @@
         :rows="pageSize"
         :total-records="total"
         :rows-per-page-options="[5, 10, 25]"
-        paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        paginator-template="FirstPa0geLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         paginator
         lazy
         responsive-layout="scroll"

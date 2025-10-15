@@ -70,15 +70,10 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return {
-    // State
     token,
     user,
     isLoading,
-
-    // Getters
     isAuthenticated,
-
-    // Actions
     initializeAuth,
     fetchProfile,
     login,

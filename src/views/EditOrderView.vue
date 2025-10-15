@@ -19,14 +19,14 @@
       </div>
 
       <div v-else-if="!currentOrder" class="text-center py-4">
-        <p class="text-red-600">Order not found</p>
+        <p class="text-red-600">{{ t('orders.orderNotFound') }}</p>
       </div>
 
       <div v-else>
         <OrderForm
           :order="currentOrder"
           :is-loading="isSaving"
-          :readonly="currentOrder.status === 'cancelled'"
+          :readonly="currentOrder.status === OrderStatus.CANCELLED"
           @submit="handleFormSubmit"
           @cancel="goBack"
         />
@@ -45,10 +45,8 @@ import OrderForm from '@/components/orders/OrderForm.vue'
 import { getOrderById } from '@/api'
 import { useOrdersStore } from '@/stores/orders'
 import { useNotification } from '@/composables/useNotification'
-import type {
-  IOrderResponse as IOrder,
-  IOrderFormData,
-} from '@/types/orders'
+import type { IOrderResponse as IOrder, IOrderFormData } from '@/types/orders'
+import { OrderStatus } from '@/types/orders'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -72,8 +70,7 @@ async function fetchOrderDetails() {
   isLoading.value = true
   try {
     currentOrder.value = await getOrderById(orderId)
-  } catch (err) {
-    console.error('Failed to fetch order:', err)
+  } catch {
     error(t('orders.failedToFetchOrder'))
     currentOrder.value = null
   } finally {
@@ -87,8 +84,7 @@ async function handleFormSubmit(formData: IOrderFormData) {
   try {
     await editOrder(orderId, formData)
     router.push('/orders')
-  } catch (err) {
-    console.error('Failed to update order:', err)
+  } catch {
     error(t('orders.failedToSaveOrder'))
   } finally {
     isSaving.value = false

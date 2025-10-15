@@ -3,7 +3,13 @@ import type { ILoginCredentials, ILoginResponse, IUser } from '@/types/auth'
 import type { IAddress, ICreateAddressData } from '@/types/addresses'
 import type { ITruck, ICreateTruckData } from '@/types/trucks'
 import type { IOrderResponse as IOrder, IOrderFormData } from '@/types/orders'
-import type { ITrip, ICreateTripData } from '@/types/trips'
+import type {
+  ITrip,
+  ICreateTripData,
+  IOrderTrip,
+  ICreateOrderTripData,
+  ICompleteTripData,
+} from '@/types/trips'
 
 export async function login(
   credentials: ILoginCredentials,
@@ -138,72 +144,67 @@ export async function updateOrder(
   return apiClient.put<IOrder>(`/orders/${id}`, data)
 }
 
-export async function updateOrderStatus(
-  id: string,
-  status: IOrder['status'],
-): Promise<IOrder> {
-  return apiClient.patch<IOrder>(`/orders/${id}/status`, { status })
-}
-
-export async function assignTruckToOrder(
-  id: string,
-  truckId: string,
-): Promise<IOrder> {
-  return apiClient.patch<IOrder>(`/orders/${id}/assign-truck`, { truckId })
-}
-
 export async function cancelOrder(id: string): Promise<IOrder> {
   return apiClient.patch<IOrder>(`/orders/${id}/cancel`)
 }
 
-export async function deleteOrder(id: string): Promise<void> {
-  return apiClient.delete<void>(`/orders/${id}`)
-}
+export async function getAllTrips(params?: {
+  page?: number
+  pageSize?: number
+}): Promise<{
+  trips: ITrip[]
+  total: number
+  page: number
+  pageSize: number
+}> {
+  const queryParams = new URLSearchParams()
+  if (params?.page) queryParams.append('page', params.page.toString())
+  if (params?.pageSize)
+    queryParams.append('pageSize', params.pageSize.toString())
 
-export async function getAllTrips(): Promise<ITrip[]> {
-  return apiClient.get<ITrip[]>('/trips')
-}
+  const query = queryParams.toString()
+  const url = query ? `/trips?${query}` : '/trips'
 
-export async function getTripById(id: string): Promise<ITrip> {
-  return apiClient.get<ITrip>(`/trips/${id}`)
-}
-
-export async function createTrip(data: ICreateTripData): Promise<ITrip> {
-  return apiClient.post<ITrip>('/trips', data)
+  return apiClient.get(url)
 }
 
 export async function updateTrip(
   id: string,
   data: Partial<ICreateTripData>,
-): Promise<ITrip> {
-  return apiClient.put<ITrip>(`/trips/${id}`, data)
-}
-
-export async function updateTripStatus(
-  id: string,
-  status: ITrip['status'],
-): Promise<ITrip> {
-  return apiClient.patch<ITrip>(`/trips/${id}/status`, { status })
+): Promise<IOrderTrip> {
+  return apiClient.put<IOrderTrip>(`/trips/${id}`, data)
 }
 
 export async function startTrip(id: string): Promise<ITrip> {
   return apiClient.patch<ITrip>(`/trips/${id}/start`)
 }
 
-export async function completeTrip(id: string): Promise<ITrip> {
-  return apiClient.patch<ITrip>(`/trips/${id}/complete`)
-}
-
-export async function updateTripRouteProgress(
+export async function completeTrip(
   id: string,
-  routePointId: string,
-  actualArrival: string,
+  { actualFuel, actualDuration }: ICompleteTripData,
 ): Promise<ITrip> {
-  return apiClient.patch<ITrip>(`/trips/${id}/route/${routePointId}/progress`, {
-    actualArrival,
+  return apiClient.patch<ITrip>(`/trips/${id}/complete`, {
+    actualFuel,
+    actualDuration,
   })
 }
 
 export async function deleteTrip(id: string): Promise<void> {
   return apiClient.delete<void>(`/trips/${id}`)
+}
+
+export async function getOrderTrips(orderId: string): Promise<IOrderTrip[]> {
+  return apiClient.get<IOrderTrip[]>(`/orders/${orderId}/trips`)
+}
+
+export async function createOrderTrip(
+  data: ICreateOrderTripData,
+): Promise<IOrderTrip> {
+  return apiClient.post<IOrderTrip>(`/orders/${data.orderId}/trips`, data)
+}
+
+export async function getAvailableTrucksForOrder(
+  orderId: string,
+): Promise<ITruck[]> {
+  return apiClient.get<ITruck[]>(`/orders/${orderId}/available-trucks`)
 }

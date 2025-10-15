@@ -1,11 +1,11 @@
 <template>
-  <Dropdown
+  <Select
     v-model="currentLocale"
     :options="localeOptions"
-    optionLabel="label"
-    optionValue="value"
-    @change="handleLanguageChange"
+    option-label="label"
+    option-value="value"
     class="w-32"
+    @change="handleLanguageChange"
   >
     <template #value="{ value }">
       <div v-if="value" class="flex items-center">
@@ -17,13 +17,13 @@
         <span>{{ option.label }}</span>
       </div>
     </template>
-  </Dropdown>
+  </Select>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Dropdown from 'primevue/dropdown'
+import Select from 'primevue/select'
 
 interface ILocaleOption {
   label: string
@@ -46,7 +46,7 @@ function getLanguageLabel(localeValue: string): string {
   return t(`languages.${localeValue}`)
 }
 
-function handleLanguageChange(event: any): void {
+function handleLanguageChange(event: { value: string }): void {
   const newLocale = event.value
   locale.value = newLocale
   currentLocale.value = newLocale
