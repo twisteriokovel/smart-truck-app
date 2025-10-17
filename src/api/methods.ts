@@ -10,6 +10,7 @@ import type {
   ICreateOrderTripData,
   ICompleteTripData,
 } from '@/types/trips'
+import type { IMonthlySummary, IYearlySummary } from '@/types/statistics'
 
 export async function login(
   credentials: ILoginCredentials,
@@ -207,4 +208,14 @@ export async function getAvailableTrucksForOrder(
   orderId: string,
 ): Promise<ITruck[]> {
   return apiClient.get<ITruck[]>(`/orders/${orderId}/available-trucks`)
+}
+
+export async function getMonthlySummary(): Promise<IMonthlySummary> {
+  return apiClient.get<IMonthlySummary>('/statistics/monthly-summary')
+}
+
+export async function getYearlyChartsData(
+  year: number,
+): Promise<IYearlySummary> {
+  return apiClient.get<IYearlySummary>(`/statistics/yearly-charts?year=${year}`)
 }

@@ -93,7 +93,15 @@ export const useOrdersStore = defineStore('orders', () => {
     }
   }
 
-  watch([page, pageSize], fetchOrders, { immediate: true })
+  watch([page, pageSize], fetchOrders)
+
+  function $reset() {
+    console.log('reset store')
+    ordersList.value = []
+    total.value = 0
+    page.value = 1
+    pageSize.value = DEFAULT_PAGE_SIZE
+  }
 
   return {
     ordersList,
@@ -106,5 +114,6 @@ export const useOrdersStore = defineStore('orders', () => {
     createOrder,
     editOrder,
     cancelOrder,
+    $reset,
   }
 })

@@ -19,7 +19,8 @@
     "update": "Оновити",
     "duplicate": "Дублювати",
     "confirmDelete": "Підтвердити видалення",
-    "notSpecified": "Не вказано"
+    "notSpecified": "Не вказано",
+    "yesterday": "Вчора"
   },
   "auth": {
     "login": "Увійти",
@@ -195,6 +196,7 @@
     "editTrip": "Редагувати поїздку",
     "deleteTrip": "Видалити поїздку",
     "confirmDeleteTripMessage": "Ви впевнені, що хочете видалити цю поїздку?",
+    "actions": "Дії",
     "createNewTrip": "Створити нову поїздку",
     "addNewTrip": "Додати нову поїздку",
     "tripNumber": "Поїздка {number}",
@@ -301,15 +303,56 @@
     "hours": "годин",
     "noTruckAssigned": "Вантажівка не призначена",
     "status": {
+      "title": "Статус",
       "planned": "Заплановано",
       "inProgress": "В процесі",
       "completed": "Завершено",
       "cancelled": "Скасовано"
     }
   },
+  "dashboard": {
+    "totalOrders": "Загальна кількість замовлень",
+    "totalTrips": "Загальна кількість поїздок",
+    "totalFuelLiters": "Загальне паливо (Л)",
+    "totalHours": "Загальні години",
+    "orders": "Замовлення цього місяця",
+    "trips": "Поїздки цього місяця",
+    "fuelLiters": "Споживання палива",
+    "hours": "Робочі години водіїв",
+    "vsLastMonth": "порівняно з минулим місяцем",
+    "ordersPerMonth": "Замовлення за місяць",
+    "tripsPerMonth": "Поїздки за місяць",
+    "tripsByLocation": "Поїздки за локаціями",
+    "monthlyExpenses": "Щомісячні витрати",
+    "fuelCosts": "Витрати на паливо",
+    "laborCosts": "Витрати на робочу силу",
+    "monthOverview": "Огляд місяця",
+    "yearOverview": "Огляд року",
+    "topDriversThisYear": "Найкращі водії цього року",
+    "workingHours": "год",
+    "noDataAvailable": "Дані недоступні"
+  },
+  "sidebar": {
+    "dashboard": "Панель керування",
+    "addresses": "Адреси",
+    "trucks": "Вантажівки",
+    "orders": "Замовлення",
+    "trips": "Поїздки"
+  },
   "validation": {
     "required": "{field} обов'язкове поле",
     "numeric": "{field} повинно бути дійсним числом",
     "minValue": "{field} повинно бути принаймні {min}"
+  },
+  "errors": {
+    "fetchingProfile": "Не вдалося завантажити профіль",
+    "fetchingMonthlySummary": "Помилка завантаження місячного звіту",
+    "fetchingYearlyData": "Помилка завантаження річних даних",
+    "fetchingOrder": "Не вдалося завантажити замовлення",
+    "creatingOrder": "Не вдалося створити замовлення",
+    "loadingAddresses": "Не вдалося завантажити адреси",
+    "savingOrder": "Не вдалося зберегти замовлення",
+    "creatingTrip": "Не вдалося створити поїздку",
+    "noDataAvailable": "Дані недоступні"
   }
 }

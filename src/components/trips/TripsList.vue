@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import DataTable from 'primevue/datatable'
@@ -99,6 +99,7 @@ const {
   pageSize,
   total,
 } = storeToRefs(tripsStore)
+const { fetchAllTrips, $reset } = tripsStore
 
 const isLoadingOrder = ref(false)
 const currentOrder = ref<IOrder | null>(null)
@@ -126,4 +127,9 @@ async function viewTripDetails(trip: IOrderTrip) {
   await fetchOrderDetails()
   selectedTrip.value = trip
 }
+
+onBeforeMount(() => {
+  $reset()
+  fetchAllTrips()
+})
 </script>

@@ -113,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
@@ -134,7 +134,7 @@ const router = useRouter()
 const ordersStore = useOrdersStore()
 const { ordersList, isLoading, page, pageSize, total } =
   storeToRefs(ordersStore)
-const { cancelOrder: cancelOrderAction } = ordersStore
+const { cancelOrder: cancelOrderAction, fetchOrders, $reset } = ordersStore
 const { getStatusConfig } = useOrderStatus()
 const { formatDate } = useDateFormat()
 const { error } = useNotification()
@@ -181,4 +181,9 @@ async function handleCancelOrder(order: IOrder) {
     isCancelling.value = false
   }
 }
+
+onBeforeMount(() => {
+  $reset()
+  fetchOrders()
+})
 </script>

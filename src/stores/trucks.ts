@@ -132,6 +132,13 @@ export const useTrucksStore = defineStore('trucks', () => {
     selectedTruck.value = null
   }
 
+  function $reset() {
+    trucksList.value = []
+    total.value = 0
+    page.value = 1
+    pageSize.value = DEFAULT_PAGE_SIZE
+  }
+
   return {
     trucksList,
     isLoading,
@@ -152,5 +159,6 @@ export const useTrucksStore = defineStore('trucks', () => {
     closeModal,
     openDetailsModal,
     closeDetailsModal,
+    $reset,
   }
 })

@@ -1,7 +1,7 @@
 import { useI18n } from 'vue-i18n'
 
 export function useDateFormat() {
-  const { locale } = useI18n()
+  const { locale, t } = useI18n()
 
   function formatDate(date: Date | string): string {
     if (!date) return ''
@@ -63,7 +63,7 @@ export function useDateFormat() {
     if (diffDays === 0) {
       return formatTime(dateObj)
     } else if (diffDays === 1) {
-      return 'Yesterday'
+      return t('common.yesterday')
     } else if (diffDays < 7) {
       return `${diffDays} days ago`
     } else {

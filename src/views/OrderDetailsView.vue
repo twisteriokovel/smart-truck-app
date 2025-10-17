@@ -129,8 +129,10 @@ import { getOrderById } from '@/api'
 import { useTripsStore } from '@/stores/trips'
 import { type IOrderResponse as IOrder, OrderStatus } from '@/types/orders'
 import { type IOrderTrip } from '@/types/trips'
+import { useNotification } from '@/composables/useNotification'
 
 const { t } = useI18n()
+const { error } = useNotification()
 const router = useRouter()
 const route = useRoute()
 const tripsStore = useTripsStore()
@@ -167,8 +169,9 @@ async function fetchOrderDetails() {
   isLoading.value = true
   try {
     currentOrder.value = await getOrderById(orderId)
-  } catch (error) {
-    console.error('Failed to fetch order:', error)
+  } catch (err) {
+    console.error('Failed to fetch order:', err)
+    error(t('errors.fetchingOrder'))
     currentOrder.value = null
   } finally {
     isLoading.value = false

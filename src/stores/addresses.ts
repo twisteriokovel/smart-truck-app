@@ -124,6 +124,13 @@ export const useAddressesStore = defineStore('addresses', () => {
     editedAddress.value = null
   }
 
+  function $reset() {
+    addressesList.value = []
+    total.value = 0
+    page.value = 1
+    pageSize.value = DEFAULT_PAGE_SIZE
+  }
+
   return {
     addressesList,
     isLoading,
@@ -140,5 +147,6 @@ export const useAddressesStore = defineStore('addresses', () => {
     removeAddress,
     openAddressModal,
     closeModal,
+    $reset,
   }
 })

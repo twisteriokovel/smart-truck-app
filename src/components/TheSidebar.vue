@@ -13,7 +13,7 @@
             ]"
           >
             <i :class="item.icon" class="mr-3 text-lg"></i>
-            {{ item.label }}
+            {{ $t(item.translationKey) }}
           </router-link>
         </li>
       </ul>

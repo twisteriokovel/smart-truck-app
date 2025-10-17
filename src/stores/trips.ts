@@ -180,6 +180,15 @@ export const useTripsStore = defineStore('trips', () => {
 
   watch([page, pageSize], fetchAllTrips, { immediate: true })
 
+  function $reset() {
+    trips.value = []
+    orderTrips.value = []
+    availableTrucks.value = []
+    total.value = 0
+    page.value = 1
+    pageSize.value = DEFAULT_PAGE_SIZE
+  }
+
   return {
     trips,
     editedTrip,
@@ -199,5 +208,6 @@ export const useTripsStore = defineStore('trips', () => {
     completeTrip,
     deleteTrip,
     fetchAvailableTrucksForOrder,
+    $reset,
   }
 })

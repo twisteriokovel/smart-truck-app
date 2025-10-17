@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import Button from 'primevue/button'
@@ -127,7 +127,8 @@ const { t } = useI18n()
 const trucksStore = useTrucksStore()
 const { trucksList, isLoading, page, pageSize, total, isWeightInTonnes } =
   storeToRefs(trucksStore)
-const { openTruckModal, removeTruck, openDetailsModal } = trucksStore
+const { openTruckModal, removeTruck, openDetailsModal, fetchTrucks, $reset } =
+  trucksStore
 
 function getFormattedWeight(weight: number | string): string {
   return formatWeight(weight, isWeightInTonnes.value)
@@ -159,4 +160,9 @@ function confirmDelete(truck: ITruck) {
     accept: () => removeTruck(truck._id),
   })
 }
+
+onBeforeMount(() => {
+  $reset()
+  fetchTrucks()
+})
 </script>

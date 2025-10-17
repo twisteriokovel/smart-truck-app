@@ -65,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import { onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import Button from 'primevue/button'
@@ -79,7 +80,8 @@ const { t } = useI18n()
 const addressesStore = useAddressesStore()
 const { addressesList, isLoading, page, pageSize, total } =
   storeToRefs(addressesStore)
-const { openAddressModal, removeAddress } = addressesStore
+const { openAddressModal, removeAddress, fetchAddresses, $reset } =
+  addressesStore
 
 function confirmDelete(address: IAddress) {
   confirm.require({
@@ -97,4 +99,9 @@ function confirmDelete(address: IAddress) {
     accept: () => removeAddress(address._id),
   })
 }
+
+onBeforeMount(() => {
+  $reset()
+  fetchAddresses()
+})
 </script>
